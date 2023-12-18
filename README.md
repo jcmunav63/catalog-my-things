@@ -1,15 +1,15 @@
-## The Catalog
+## The Catalog - My Things
 
 <a name="readme-top"></a>
 <div align="center">
-    <img src="logo-julio.png" alt="main-logo" width="500"  height="auto" />
+    <img src="logo_jcm.png" alt="main-logo" width="500"  height="auto" />
   <br/>
-  <h3><b>The Catalog</b></h3>
+  <h3><b>The Catalog - My Things</b></h3>
 </div>
 # 📗 Table of Contents
 
 - [📗 Table of Contents](#-table-of-contents)
-- [📖 The Catalog ](#-the-catalog-)
+- [📖 The Catalog - My Things ](#-the-catalog---my-things-)
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
@@ -28,12 +28,10 @@
   - [❓ FAQ ](#-faq-)
   - [📝 License ](#-license-)
 
-# 📖 The Catalog <a name="about-project"></a>
+# 📖 The Catalog - My Things <a name="about-project"></a>
 
-The Catalog project is an app developed to simulate the operations of a real-world library within OOP University. This app is designed to utilize Object-Oriented Programming (OOP) principles to create a comprehensive system that captures vital library processes.
-<div align="center">
-    <img src="logo.png" alt="logo" width="500"  height="auto" />
-</div>
+The Catalog - My Things is an app developed to create a catalog of personal things, music, books, and games. This app is developed using Ruby, Object-Oriented Programming (OOP) principles, and unit testing using RSpec. This is a console user interface.
+
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -45,10 +43,11 @@ The Catalog project is an app developed to simulate the operations of a real-wor
 
 ### Key Features <a name="key-features"></a>
 - **Create necessary associations within the project to lay the foundation for the user interface development planned for the next milestone.**
-- **Use of the decorator pattern, which is employed to add additional functionalities to objects dynamically.**
 - **Add a console User Interface to run the application.**
 - **Refactor the entire application to apply SOLID, YAGNI, KISS, & DRY principles.**
 - **Preserve all data using files with JSON format.**
+- **Use of Object Oriented Programming Principles.**
+- **Add unit testing with RSpec.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -67,7 +66,7 @@ In order to run this project you need:
 
 ```sh
   cd my-folder
-  git clone https://github.com/Alejandroq12/the-catalog.git
+  git clone https://github.com/jcmunav63/catalog-my-things.git
 ```
 
 ### Install
@@ -117,12 +116,13 @@ Not available at the moment.
 - GitHub: [@jcmunav63](https://github.com/jcmunav63)
 - Twitter: [@jcmunav63](https://twitter.com/jcmunav63)
 - LinkedIn: [@juan-carlos-muñoz-navarrete](https://www.linkedin.com/in/juan-carlos-mu%C3%B1oz-navarrete-5a15b6276/)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **I will add a user interface.**
-- **I will preserve data.**
+- **We will add a user interface.**
+- **We will add methods to erase items.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -155,7 +155,7 @@ I would like to thank all of my colleagues who inspire to do my best everyday.
 
 **Did you create this project from scratch?**
 
-  - Yes, and for that reason, I have extensively learned about Object-Oriented Programming, including key concepts such as association, aggregation, and composition, as well as skills in running scripts, obtaining user input, adhering to best practices, and applying SOLID principles.
+  - Yes, and for that reason, we have extensively learned about Object-Oriented Programming, including key concepts such as association, aggregation, and composition, as well as skills in running scripts, obtaining user input, adhering to best practices, and applying SOLID principles.
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
