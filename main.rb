@@ -1,49 +1,60 @@
-# require_relative 'item'
+require_relative 'item'
+require_relative 'book'
+require_relative 'label'
+require_relative 'catalog'
 
-def main
-  puts 'Welcome to the Catalog of my Personal Things'
-  loop do
+class Main
+  def initialize
+    @catalog = Catalog.new
+  end
+
+  def run
+    puts 'Welcome to the Catalog of my Personal Things'
+    loop do
+      display_menu
+      option = gets_option
+      break if option == 7
+
+      handle_option(option)
+    end
+    puts 'Thank you for using this app!'
+  end
+
+  private
+
+  def display_menu
     puts '1) Add new item'
     puts '2) Archive item'
     puts '3) List all items'
-    puts '4) Exit the app'
-    gets_option
+    puts '4) List all books'
+    puts '5) List all labels'
+    puts '6) Add a book'
+    puts '7) Exit the app'
+  end
+
+  def gets_option
+    print 'Enter your option here: '
+    gets.chomp.to_i
+  end
+
+  def handle_option(option)
+    case option
+    when 1
+      @catalog.create_item
+    when 2
+      @catalog.archive_item
+    when 3
+      @catalog.list_all_items
+    when 4
+      @catalog.list_all_books
+    when 5
+      @catalog.list_all_labels
+    when 6
+      @catalog.add_a_book
+    else
+      puts 'Invalid option'
+    end
   end
 end
 
-def gets_option
-  print 'Enter your option here: '
-  option = gets.chomp.to_i
-  case option
-  when 1
-    create_item
-  when 2
-    archive_item
-  when 3
-    list_all_items
-  when 4
-    puts 'Thank you for using this app!'
-    exit
-  else
-    puts 'Invalid option'
-  end
-end
-
-# Placeholder for the create_item method
-def create_item
-  puts 'Creating a new item...'
-  # Implementation for creating a new item goes here
-end
-
-# Placeholder for the archive_item method
-def archive_item
-  puts 'Archiving an item...'
-  # Implementation for archiving an item goes here
-end
-
-# Placeholder for the list_all_items method
-def list_all_items
-  puts 'Listing all items...'
-  # Implementation for listing all items goes here
-end
-main
+Main.new.run
