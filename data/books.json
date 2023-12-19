@@ -1,1 +1,1 @@
-[{"id":0,"publisher":"Publisher","publish_date":"2020-02-02","cover_condition":"GOOD","genre":null,"author":"Author","source":null,"label":"label","archived":false},{"id":1,"publisher":"publisher2","publish_date":"2525-02-02","cover_condition":"BAD","genre":null,"author":"author2","source":null,"label":"label2","archived":false}]
+[{"id":0,"publisher":"Publisher","publish_date":"2020-02-02","cover_condition":"GOOD","genre":null,"author":"Author","source":null,"label":"Label","archived":false}]

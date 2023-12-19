@@ -13,26 +13,16 @@ class BookManager
   end
 
   def add_a_book
-    display_message('Enter the book cover color: ')
-    color = gets.chomp
-    display_message('Enter the book\'s publish date (YYYY-MM-DD): ')
-    publish_date = gets.chomp
-    display_message('Enter the book publisher: ')
-    publisher = gets.chomp
-    display_message('Enter the book author: ')
-    author = gets.chomp
-    display_message('Enter the book label: ')
-    label_title = gets.chomp
+    color = prompt('Enter the book cover color: ')
+    publish_date = prompt('Enter the book\'s publish date (YYYY-MM-DD): ')
+    publisher = prompt('Enter the book publisher: ')
+    author = prompt('Enter the book author: ')
+    label_title = prompt('Enter the book label: ')
     cover_condition = input_cover_condition
 
-    label_id = generate_label_id
-    label = Label.new(label_id, label_title, color)
+    label = create_label(label_title, color)
+    book = create_book(publisher, cover_condition, publish_date, author, label)
 
-    book_id = generate_book_id
-    book = Book.new(id: book_id, publish_date: publish_date, 
-    author: author, label: label, publisher: publisher, 
-    cover_state: cover_condition, genre: nil, source: nil)
-  
     @books.push(book)
     @labels.push(label)
     display_message('Book added successfully.')
@@ -120,6 +110,22 @@ class BookManager
   end
 
   private
+
+  def prompt(message)
+    display_message(message)
+    gets.chomp
+  end
+
+  def create_label(title, color)
+    label_id = generate_label_id
+    Label.new(label_id, title, color)
+  end
+
+  def create_book(publisher, cover_condition, publish_date, author, label)
+    book_id = generate_book_id
+    Book.new(id: book_id, publish_date: publish_date, author: author, label: label,
+             publisher: publisher, cover_state: cover_condition, genre: nil, source: nil)
+  end
 
   def display_message(message)
     puts "╔#{'═' * (message.length + 2)}╗"
