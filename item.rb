@@ -1,15 +1,18 @@
+require_relative 'label'
+
 class Item
   attr_accessor :genre, :author, :source, :label, :archived
   attr_reader :id, :publish_date
 
   def initialize(genre, author, source, label, publish_date)
-    @id = Random.rand(1..1000)
+    @id = id
     @genre = genre
     @author = author
     @source = source
     @label = label
     @publish_date = publish_date
     @archived = false
+    label&.add_item(self)
   end
 
   def can_be_archived?()

@@ -1,119 +1,112 @@
-# require_relative 'item'
-require_relative 'music_album'
+require_relative 'item'
+require_relative 'book'
+require_relative 'label'
+require_relative 'catalog'
 
-def main
-  init_arrays
-  puts 'Welcome to the Catalog of my Personal Things'
-  loop do
+class Main
+  def initialize
+    @catalog = Catalog.new
+  end
+
+  def run
+    puts 'Welcome to the Catalog of my Personal Things'
+    loop do
+      display_menu
+      option = gets_option
+      break if option == 13
+
+      handle_option(option)
+    end
+    puts 'Thank you for using this app!'
+  end
+
+  private
+
+  def display_menu
     puts '1) List all books'
-    puts '2) List all music albums'
-    puts '3) List all movies'
-    puts '4) List all games'
-    puts '5) List all genres'
-    puts '6) List all labels'
-    puts '7) Create a Music Album'
-    puts '8) Exit the app'
+    puts '2) List all labels'
+    puts '3) Add a book'
+    puts '4) Exit the app'
+  end
+
+  def gets_option
     print 'Enter your option here: '
-    option = gets.chomp.to_i
-    if option in (1..6)
-      gets_option(option)
+    gets.chomp.to_i
+  end
+
+  def handle_option(option)
+    method_name = option_methods[option]
+    if method_name
+      send(method_name)
     else
-      gets_option_b(option)
+      puts 'Invalid option'
     end
   end
-end
 
-def gets_option(option)
-  case option
-  when 1
-    list_all_books
-  when 2
-    list_all_music_albums
-  when 3
-    list_all_movies
-  when 4
-    list_all_games
-  when 5
-    list_all_genres
-  when 6
-    list_all_labels
+  def option_methods
+    {
+      1 => :list_all_books,
+      2 => :list_all_music_albums,
+      3 => :list_all_movies,
+      4 => :list_all_games,
+      5 => :list_all_genres,
+      6 => :list_all_labels,
+      7 => :list_all_authors,
+      8 => :list_all_sources,
+      9 => :add_a_book,
+      10 => :add_a_music_album,
+      11 => :add_a_movie,
+      12 => :add_a_game
+    }
+  end
+
+  def list_all_books
+    @catalog.list_all_books
+  end
+
+  def list_all_music_albums
+    @catalog.list_all_music_albums
+  end
+
+  def list_all_movies
+    @catalog.list_all_movies
+  end
+
+  def list_all_games
+    @catalog.list_all_games
+  end
+
+  def list_all_genres
+    @catalog.list_all_genres
+  end
+
+  def list_all_labels
+    @catalog.list_all_labels
+  end
+
+  def list_all_authors
+    @catalog.list_all_authors
+  end
+
+  def list_all_sources
+    @catalog.list_all_sources
+  end
+
+  def add_a_book
+    @catalog.add_a_book
+  end
+
+  def add_a_music_album
+    @catalog.add_a_music_album
+  end
+
+  def add_a_movie
+    @catalog.add_a_movie
+  end
+
+  def add_a_game
+    @catalog.add_a_game
   end
 end
 
-def gets_option_b(option)
-  case option
-  when 7
-    create_music_album
-  when 8
-    puts 'Thank you for using this app!'
-    exit
-  else
-    puts 'Invalid option'
-  end
-end
-
-def init_arrays
-  @musicalbums = []
-end
-
-# Placeholder for the list_all_books method
-def list_all_books
-  # Implement the list of all books...'
-end
-
-# Placeholder for the list all music albums method
-def list_all_music_albums
-  # implment list of all music albums...'
-  puts
-  MusicAlbum.all.each do |album|
-    puts "#{album.id}. #{album.author} - #{album.genre} (#{album.publish_date})"
-  end
-end
-
-# Placeholder for the list_all_movies method
-def list_all_movies
-  # puts 'Implement the list of all movies...'
-end
-
-# Placeholder for the list_all_gamees method
-def list_all_games
-  # puts 'Implement the list of all games...'
-end
-
-# Placeholder for the list all music albums method
-def list_all_genres
-  # implment list of all genres...'
-  puts "\nList of all genres:"
-  Genre.all.each do |genre|
-    puts "#{genre.id}. #{genre.name}"
-  end
-end
-
-# Placeholder for the list all labels method
-def list_all_labels
-  # implment list of all labels...'
-end
-
-# Placeholder for the list all labels method
-# def create_music_album
-#   MusicAlbum.create_music_album
-# end
-def create_music_album
-  print 'Genre: '
-  genre = gets.chomp
-  print 'Author: '
-  author = gets.chomp
-  print 'Source: '
-  source = gets.chomp
-  print 'Label: '
-  label = gets.chomp
-  print 'Publish date: '
-  publish_date = gets.chomp
-  print 'On Spotify (true / false): '
-  on_spotify = gets.chomp
-  @musicalbums << MusicAlbum.new(genre, author, source, label, publish_date, on_spotify)
-  puts 'Music Album created successfully!'
-  puts
-end
-
-main
+Main.new.run
