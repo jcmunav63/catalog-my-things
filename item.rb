@@ -6,7 +6,7 @@ class Item
   attr_writer :archived
 
   def initialize(genre, author, source, label, publish_date)
-    @id = Random.rand(1..1000)
+    @id = id
     @genre = genre
     @author = author
     @source = source
