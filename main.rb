@@ -16,11 +16,11 @@ def gets_option
   option = gets.chomp.to_i
   case option
   when 1
-    puts ' Method: create_item'
+    create_item
   when 2
-    puts ' Method: archive_item'
+    archive_item
   when 3
-    puts ' Method: list_all_items'
+    list_all_items
   when 4
     puts 'Thank you for using this app!'
     exit
@@ -29,4 +29,21 @@ def gets_option
   end
 end
 
+# Placeholder for the create_item method
+def create_item
+  puts 'Creating a new item...'
+  # Implementation for creating a new item goes here
+end
+
+# Placeholder for the archive_item method
+def archive_item
+  puts 'Archiving an item...'
+  # Implementation for archiving an item goes here
+end
+
+# Placeholder for the list_all_items method
+def list_all_items
+  puts 'Listing all items...'
+  # Implementation for listing all items goes here
+end
 main
