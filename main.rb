@@ -13,7 +13,7 @@ class Main
     loop do
       display_menu
       option = gets_option
-      break if option == 7
+      break if option == 4
 
       handle_option(option)
     end
@@ -23,13 +23,10 @@ class Main
   private
 
   def display_menu
-    puts '1) Add new item'
-    puts '2) Archive item'
-    puts '3) List all items'
-    puts '4) List all books'
-    puts '5) List all labels'
-    puts '6) Add a book'
-    puts '7) Exit the app'
+    puts '1) List all books'
+    puts '2) List all labels'
+    puts '3) Add a book'
+    puts '4) Exit the app'
   end
 
   def gets_option
@@ -40,16 +37,10 @@ class Main
   def handle_option(option)
     case option
     when 1
-      @catalog.create_item
-    when 2
-      @catalog.archive_item
-    when 3
-      @catalog.list_all_items
-    when 4
       @catalog.list_all_books
-    when 5
+    when 2
       @catalog.list_all_labels
-    when 6
+    when 3
       @catalog.add_a_book
     else
       puts 'Invalid option'
