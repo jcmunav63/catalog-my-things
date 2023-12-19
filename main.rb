@@ -13,7 +13,7 @@ class Main
     loop do
       display_menu
       option = gets_option
-      break if option == 4
+      break if option == 13
 
       handle_option(option)
     end
@@ -35,16 +35,77 @@ class Main
   end
 
   def handle_option(option)
-    case option
-    when 1
-      @catalog.list_all_books
-    when 2
-      @catalog.list_all_labels
-    when 3
-      @catalog.add_a_book
+    method_name = option_methods[option]
+    if method_name
+      send(method_name)
     else
       puts 'Invalid option'
     end
+  end
+
+  def option_methods
+    {
+      1 => :list_all_books,
+      2 => :list_all_music_albums,
+      3 => :list_all_movies,
+      4 => :list_all_games,
+      5 => :list_all_genres,
+      6 => :list_all_labels,
+      7 => :list_all_authors,
+      8 => :list_all_sources,
+      9 => :add_a_book,
+      10 => :add_a_music_album,
+      11 => :add_a_movie,
+      12 => :add_a_game
+    }
+  end
+
+  def list_all_books
+    @catalog.list_all_books
+  end
+
+  def list_all_music_albums
+    @catalog.list_all_music_albums
+  end
+
+  def list_all_movies
+    @catalog.list_all_movies
+  end
+
+  def list_all_games
+    @catalog.list_all_games
+  end
+
+  def list_all_genres
+    @catalog.list_all_genres
+  end
+
+  def list_all_labels
+    @catalog.list_all_labels
+  end
+
+  def list_all_authors
+    @catalog.list_all_authors
+  end
+
+  def list_all_sources
+    @catalog.list_all_sources
+  end
+
+  def add_a_book
+    @catalog.add_a_book
+  end
+
+  def add_a_music_album
+    @catalog.add_a_music_album
+  end
+
+  def add_a_movie
+    @catalog.add_a_movie
+  end
+
+  def add_a_game
+    @catalog.add_a_game
   end
 end
 
