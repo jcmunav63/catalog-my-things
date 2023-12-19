@@ -4,7 +4,7 @@ class Item
   attr_accessor :genre, :author, :source, :label, :archived
   attr_reader :id, :publish_date
 
-  def initialize(genre, author, source, label, publish_date)
+  def initialize(id, genre, author, source, label, publish_date) # rubocop:disable Metrics/ParameterLists
     @id = id
     @genre = genre
     @author = author
