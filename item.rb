@@ -1,4 +1,4 @@
-require_relatice 'label'
+require_relative 'label'
 
 class Item
   attr_accessor :genre, :author, :source, :label
