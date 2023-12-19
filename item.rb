@@ -1,9 +1,8 @@
 require_relative 'label'
 
 class Item
-  attr_accessor :genre, :author, :source, :label
+  attr_accessor :genre, :author, :source, :label, :archived
   attr_reader :id, :publish_date
-  attr_writer :archived
 
   def initialize(genre, author, source, label, publish_date)
     @id = id
