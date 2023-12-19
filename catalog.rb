@@ -2,7 +2,7 @@ require_relative 'book_manager'
 
 class Catalog
   def initialize
-    @book_manager = Bookmanager.new
+    @book_manager = BookManager.new
     @items = []
     @labels = []
   end
