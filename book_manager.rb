@@ -73,7 +73,8 @@ class BookManager
     label_data = {
       id: label.id,
       title: label.title,
-      color: label.color
+      color: label.color,
+      item_ids: label.items.map(&:id)
     }
 
     stored_labels = load_data_from_file('data/labels.json')
