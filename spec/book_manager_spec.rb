@@ -50,7 +50,9 @@ describe BookManager do
   describe '#store_book' do
     it 'stores book data to a file' do
       book = instance_double('Book', id: 1, publisher: 'Publisher', publish_date: '2020-01-01', cover_state: 'Good',
-                                     genre: nil, author: 'Author', source: nil, label: instance_double('Label', title: 'Label Title'), archived: false)
+                                     genre: nil, author: 'Author',
+                                     source: nil,
+                                     label: instance_double('Label', title: 'Label Title'), archived: false)
       allow(@book_manager).to receive(:write_data_to_file)
 
       @book_manager.store_book(book)
