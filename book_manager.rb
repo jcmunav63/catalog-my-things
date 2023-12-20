@@ -13,16 +13,17 @@ class BookManager
   end
 
   def add_a_book
-    color = prompt('Enter the book cover color: ')
-    publish_date = prompt('Enter the book\'s publish date (YYYY-MM-DD): ')
-    publisher = prompt('Enter the book publisher: ')
-    author = prompt('Enter the book author: ')
-    label_title = prompt('Enter the book label: ')
+    color = input_book_color
+    publish_date = input_publish_date
+    publisher = input_publisher
+    author = input_author
+    label_title = input_label_title
     cover_condition = input_cover_condition
-
-    label = create_label(label_title, color)
-    book = create_book(publisher, cover_condition, publish_date, author, label)
-
+    label_id = generate_label_id
+    label = Label.new(label_id, label_title, color)
+    book_id = generate_book_id
+    book = Book.new(id: book_id, publish_date: publish_date, author: author, label: label, publisher: publisher,
+                    cover_state: cover_condition, genre: nil, source: nil)
     @books.push(book)
     @labels.push(label)
     display_message('Book added successfully.')
@@ -97,7 +98,7 @@ class BookManager
   def list_all_books
     @books = load_data_from_file('data/books.json')
     @books.each do |book|
-      display_message("Book Title: #{book['title']}, Publisher: #{book['publisher']},
+      display_message("Book id: #{book['id']}, Publisher: #{book['publisher']},
         Publish Date: #{book['publish_date']}, Cover Condition: #{book['cover_condition']}")
     end
   end
@@ -111,20 +112,29 @@ class BookManager
 
   private
 
-  def prompt(message)
-    display_message(message)
+  def input_book_color
+    display_message('Enter the book cover color: ')
     gets.chomp
   end
 
-  def create_label(title, color)
-    label_id = generate_label_id
-    Label.new(label_id, title, color)
+  def input_publish_date
+    display_message('Enter the book\'s publish date (YYYY-MM-DD): ')
+    gets.chomp
   end
 
-  def create_book(publisher, cover_condition, publish_date, author, label)
-    book_id = generate_book_id
-    Book.new(id: book_id, publish_date: publish_date, author: author, label: label,
-             publisher: publisher, cover_state: cover_condition, genre: nil, source: nil)
+  def input_publisher
+    display_message('Enter the book publisher: ')
+    gets.chomp
+  end
+
+  def input_author
+    display_message('Enter the book author: ')
+    gets.chomp
+  end
+
+  def input_label_title
+    display_message('Enter the book label: ')
+    gets.chomp
   end
 
   def display_message(message)
