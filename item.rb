@@ -1,4 +1,5 @@
 require_relative 'label'
+require_relative 'author'
 
 class Item
   attr_accessor :genre, :author, :source, :label, :archived
@@ -13,6 +14,7 @@ class Item
     @publish_date = publish_date
     @archived = false
     label&.add_item(self)
+    author&.add_item(self)
   end
 
   def can_be_archived?()
