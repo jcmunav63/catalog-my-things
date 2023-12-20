@@ -14,12 +14,11 @@ class BookManager
     @authors = []
   end
 
-  def add_a_book # rubocop:disable Metrics/MethodLength
+  def add_a_book
     color = input_book_color
     publish_date = input_publish_date
     publisher = input_publisher
-    author_first_name = input_author_first_name
-    author_last_name = input_author_last_name
+    author_first_name, author_last_name = input_author_name
     label_title = input_label_title
     cover_condition = input_cover_condition
     label_id = generate_label_id
@@ -153,14 +152,12 @@ class BookManager
     gets.chomp
   end
 
-  def input_author_first_name
-    display_message('Enter the book author first name: ')
-    gets.chomp
-  end
-
-  def input_author_last_name
-    display_message('Enter the book author last name: ')
-    gets.chomp
+  def input_author_name
+    display_message('Enter the book author\'s first name: ')
+    first_name = gets.chomp
+    display_message('Enter the book author\'s last name: ')
+    last_name = gets.chomp
+    [first_name, last_name]
   end
 
   def input_label_title
