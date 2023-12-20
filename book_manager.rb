@@ -1,34 +1,42 @@
 require_relative 'book'
 require_relative 'label'
+require_relative 'author'
 require 'json'
 require 'date'
 require 'fileutils'
 
 class BookManager
-  attr_accessor :books, :labels
+  attr_accessor :books, :labels, :authors
 
   def initialize
     @books = []
     @labels = []
+    @authors = []
   end
 
-  def add_a_book
+  def add_a_book # rubocop:disable Metrics/MethodLength
     color = input_book_color
     publish_date = input_publish_date
     publisher = input_publisher
-    author = input_author
+    author_first_name = input_author_first_name
+    author_last_name = input_author_last_name
     label_title = input_label_title
     cover_condition = input_cover_condition
     label_id = generate_label_id
+    author_id = generate_author_id
     label = Label.new(label_id, label_title, color)
     book_id = generate_book_id
+    author = Author.new(author_id, author_first_name, author_last_name)
     book = Book.new(id: book_id, publish_date: publish_date, author: author, label: label, publisher: publisher,
                     cover_state: cover_condition, genre: nil, source: nil)
+
     @books.push(book)
     @labels.push(label)
+    @authors.push(author)
     display_message('Book added successfully.')
     store_book(book)
     store_label(label)
+    store_author(author)
   end
 
   def generate_book_id
@@ -39,6 +47,11 @@ class BookManager
   def generate_label_id
     stored_labels = load_data_from_file('data/labels.json')
     stored_labels.size
+  end
+
+  def generate_author_id
+    stored_authors = load_data_from_file('data/authors.json')
+    stored_authors.size
   end
 
   def input_cover_condition
@@ -58,7 +71,6 @@ class BookManager
       publish_date: book.publish_date,
       cover_condition: book.cover_state,
       genre: book.genre,
-      author: book.author,
       source: book.source,
       label: book.label.title,
       archived: book.archived
@@ -80,6 +92,19 @@ class BookManager
     stored_labels = load_data_from_file('data/labels.json')
     stored_labels << label_data
     write_data_to_file('data/labels.json', stored_labels)
+  end
+
+  def store_author(author)
+    author_data = {
+      id: author.id,
+      first_name: author.first_name,
+      last_name: author.last_name,
+      item_ids: author.items.map(&:id)
+    }
+
+    stored_authors = load_data_from_file('data/authors.json')
+    stored_authors << author_data
+    write_data_to_file('data/authors.json', stored_authors)
   end
 
   def load_data_from_file(file_path)
@@ -128,8 +153,13 @@ class BookManager
     gets.chomp
   end
 
-  def input_author
-    display_message('Enter the book author: ')
+  def input_author_first_name
+    display_message('Enter the book author first name: ')
+    gets.chomp
+  end
+
+  def input_author_last_name
+    display_message('Enter the book author last name: ')
     gets.chomp
   end
 
