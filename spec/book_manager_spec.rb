@@ -18,9 +18,15 @@ describe BookManager do
       allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
 
       # Mock the creation of Book, Label, Author
-      allow(Book).to receive(:new).and_return(double('Book'))
-      allow(Label).to receive(:new).and_return(double('Label'))
-      allow(Author).to receive(:new).and_return(double('Author'))
+      book_double = double('Book', id: 1, publisher: 'Publisher', publish_date: '2020-01-01', cover_state: 'GOOD',
+                                   genre: nil, author: 'Author', label: double('Label', title: 'Label Title'),
+                                   archived: false)
+      label_double = double('Label', id: 1, title: 'Label Title', color: 'Red', items: [])
+      author_double = double('Author', id: 1, first_name: 'First', last_name: 'Last', items: [])
+
+      allow(Book).to receive(:new).and_return(book_double)
+      allow(Label).to receive(:new).and_return(label_double)
+      allow(Author).to receive(:new).and_return(author_double)
 
       # Stubbing methods that interact with files
       allow(@book_manager).to receive(:store_book)
