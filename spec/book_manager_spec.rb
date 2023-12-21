@@ -8,41 +8,41 @@ describe BookManager do
   end
 
   describe '#add_a_book' do
-    before do
-      # Stubbing user input methods
-      allow(@book_manager).to receive(:input_book_color).and_return('Red')
-      allow(@book_manager).to receive(:input_publish_date).and_return('2020-01-01')
-      allow(@book_manager).to receive(:input_publisher).and_return('Publisher')
-      allow(@book_manager).to receive(:input_author).and_return('Author')
-      allow(@book_manager).to receive(:input_label_title).and_return('Label Title')
-      allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
+    context 'when adding a new book' do
+      before do
+        allow(@book_manager).to receive(:input_book_color).and_return('Red')
+        allow(@book_manager).to receive(:input_publish_date).and_return('2020-01-01')
+        allow(@book_manager).to receive(:input_publisher).and_return('Publisher')
+        allow(@book_manager).to receive(:input_author_name).and_return(%w[Author Lastname])
+        allow(@book_manager).to receive(:input_label_title).and_return('Label Title')
+        allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
 
-      # Mock the creation of Book, Label, Author
-      @mock_book = instance_double('Book', id: 1)
-      @mock_label = instance_double('Label', id: 1, title: 'Label Title', color: 'Red')
-      @mock_author = instance_double('Author', id: 1, first_name: 'First', last_name: 'Last')
+        allow(@book_manager).to receive(:generate_book_id).and_return(1)
+        allow(@book_manager).to receive(:generate_label_id).and_return(1)
+        allow(@book_manager).to receive(:generate_author_id).and_return(1)
+        allow(@book_manager).to receive(:store_book)
+        allow(@book_manager).to receive(:store_label)
+        allow(@book_manager).to receive(:store_author)
+      end
 
-      allow(Book).to receive(:new).and_return(@mock_book)
-      allow(Label).to receive(:new).and_return(@mock_label)
-      allow(Author).to receive(:new).and_return(@mock_author)
+      it 'creates and stores a book with the correct properties' do
+        @book_manager.add_a_book
 
-      # Stubbing methods that interact with files
-      allow(@book_manager).to receive(:store_book)
-      allow(@book_manager).to receive(:store_author)
-      allow(@book_manager).to receive(:store_label)
-      allow(@book_manager).to receive(:generate_book_id).and_return(1)
-      allow(@book_manager).to receive(:generate_label_id).and_return(1)
-      allow(@book_manager).to receive(:generate_author_id).and_return(1)
-    end
+        expect(@book_manager.books.last).to have_attributes(
+          id: 1,
+          publisher: 'Publisher',
+          publish_date: '2020-01-01',
+          cover_state: 'GOOD',
+          author: an_instance_of(Author),
+          label: an_instance_of(Label)
+        )
+        expect(@book_manager.labels.last).to have_attributes(id: 1, title: 'Label Title', color: 'Red')
+        expect(@book_manager.authors.last).to have_attributes(id: 1, first_name: 'Author', last_name: 'Lastname')
 
-    it 'adds the correct book to the books array' do
-      @book_manager.add_a_book
-      expect(@book_manager.books).to include(@mock_book)
-    end
-
-    it 'adds the correct label to the labels array' do
-      @book_manager.add_a_book
-      expect(@book_manager.labels).to include(@mock_label)
+        expect(@book_manager).to have_received(:store_book).with(@book_manager.books.last)
+        expect(@book_manager).to have_received(:store_label).with(@book_manager.labels.last)
+        expect(@book_manager).to have_received(:store_author).with(@book_manager.authors.last)
+      end
     end
   end
 
