@@ -17,12 +17,18 @@ describe BookManager do
       allow(@book_manager).to receive(:input_label_title).and_return('Label Title')
       allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
 
+      # Mock the creation of Book, Label, Author
+      allow(Book).to receive(:new).and_return(double('Book'))
+      allow(Label).to receive(:new).and_return(double('Label'))
+      allow(Author).to receive(:new).and_return(double('Author'))
+
       # Stubbing methods that interact with files
       allow(@book_manager).to receive(:store_book)
       allow(@book_manager).to receive(:store_author)
       allow(@book_manager).to receive(:store_label)
       allow(@book_manager).to receive(:generate_book_id).and_return(1)
       allow(@book_manager).to receive(:generate_label_id).and_return(1)
+      allow(@book_manager).to receive(:generate_author_id).and_return(1)
     end
 
     it 'adds a book to the books array' do
