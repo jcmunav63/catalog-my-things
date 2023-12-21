@@ -19,6 +19,7 @@ describe BookManager do
 
       # Stubbing methods that interact with files
       allow(@book_manager).to receive(:store_book)
+      allow(@book_manager).to receive(:store_author)
       allow(@book_manager).to receive(:store_label)
       allow(@book_manager).to receive(:generate_book_id).and_return(1)
       allow(@book_manager).to receive(:generate_label_id).and_return(1)
