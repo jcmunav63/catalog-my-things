@@ -5,6 +5,7 @@ require_relative 'attributes_lists'
 class Catalog
   def initialize
     @book_manager = BookManager.new
+    @musicalbum_manager = AlbumManager.new
     @attributes_lists = AttributesLists.new
   end
 
@@ -25,7 +26,7 @@ class Catalog
   end
 
   def list_all_genres
-    @genres.list_all_genres
+    @attributes_lists.list_all_genres
   end
 
   def list_all_labels
