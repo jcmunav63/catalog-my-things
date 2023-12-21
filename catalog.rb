@@ -1,12 +1,14 @@
 require_relative 'book_manager'
 require_relative 'musicalbum_manager'
 require_relative 'attributes_lists'
+require_relative 'games_manager'
 
 class Catalog
   def initialize
     @book_manager = BookManager.new
     @musicalbum_manager = AlbumManager.new
     @attributes_lists = AttributesLists.new
+    @games_manager = GamesManager.new
   end
 
   def list_all_books

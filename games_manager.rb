@@ -1,55 +1,67 @@
-require_relative 'music_album'
-require_relative 'catalog'
+require_relative 'game'
 require_relative 'label'
 require_relative 'genre'
+require_relative 'catalog'
 require_relative 'author'
-require 'time'
 require 'json'
+require 'date'
+require 'fileutils'
 
-class AlbumManager
-  attr_accessor :musicalbums, :labels, :genres, :author
+class GamesManager
+  attr_accessor :games, :labels, :genres, :author
 
   def initialize
-    @musicalbums = []
+    @games = []
     @labels = []
     @genres = []
     @authors = []
   end
 
-  def add_a_music_album
+  def add_a_game
     genre_name = input_genre
     author_first_name = input_author_first
     author_last_name = input_author_last
     source = input_source
     label_title = input_label
     publish_date_str = input_publish_date
-    on_spotify = input_on_spotify
-    album_id = Random.rand(1..1000)
-    id1 = Random.rand(1..1000)
-    id2 = Random.rand(1..1000)
-    author_id = generate_author_id
-    label = Label.new(id1, label_title, '')
-    genre = Genre.new(id2, genre_name)
-    author = Author.new(author_id, author_first_name, author_last_name)
+    multiplayer = input_multiplayer
+    last_played = input_last_played_at
     publish_date = verify_date(publish_date_str)
-    album = MusicAlbum.new(
-      id: album_id,
-      genre: genre,
-      author: author,
-      source: source,
-      label: label,
-      publish_date: publish_date,
-      on_spotify: on_spotify
-    )
-    @musicalbums.push(album)
-    @labels.push(label) unless @labels.include?(label)
-    @genres.push(genre) unless @genres.include?(genre)
+    last_played_at = verify_date(last_played)
+    label_id = generate_label_id
+    genre_id = generate_genre_id
+    author_id = generate_author_id
+    game_id = generate_game_id
+    label = Label.new(label_id, label_title, '')
+    genre = Genre.new(genre_id, genre_name)
+    author = Author.new(author_id, author_first_name, author_last_name)
+    game = Game.new(id: game_id, genre: genre, author: author, source: source,
+                    label: label, publish_date: publish_date, multiplayer: multiplayer,
+                    last_played_at: last_played_at)
+    @games.push(game)
+    @labels.push(label)
+    @genres.push(genre)
     @authors.push(author)
+    display_message(' The Game was added successfully! ')
+    store_game(game)
     store_label(label)
     store_genre(genre)
-    store_musicalbum(album)
     store_author(author)
-    display_message(' Music Album created successfully! ')
+  end
+
+  def generate_game_id
+    stored_games = load_data_from_file('data/games.json')
+    stored_games.size
+  end
+
+  def generate_label_id
+    stored_labels = load_data_from_file('data/labels.json')
+    stored_labels.size
+  end
+
+  def generate_genre_id
+    stored_genres = load_data_from_file('data/genres.json')
+    stored_genres.size
   end
 
   def generate_author_id
@@ -57,33 +69,23 @@ class AlbumManager
     stored_authors.size
   end
 
-  def list_all_music_albums
-    puts
-    puts '-- List of all Music Albums --'
-    @musicalbums.each do |album|
-      label_info = album.label.nil? ? 'N/A' : "#{album.label.title} #{album.label.color}"
-      puts "(#{album.id}) | Genre: #{album.genre.name} | Author: #{album.author}" \
-           "| Source: #{album.source} | Label: #{label_info}" \
-           "| Publish date: #{album.publish_date.year || 'N/A'} | On Spotify: #{album.on_spotify}"
-    end
-    puts
-  end
-
-  def store_musicalbum(album)
-    label_data = {
-      id: album.id,
-      genre: album.genre.name,
-      authorlast: album.author.last_name,
-      authorfirst: album.author.first_name,
-      source: album.source,
-      label: album.label.title,
-      publish_date: album.publish_date,
-      on_spotify: album.on_spotify
+  def store_game(game)
+    game_data = {
+      id: game.id,
+      genre: game.genre.name,
+      authorlast: game.author.last_name,
+      authorfirst: game.author.first_name,
+      source: game.source,
+      label: game.label.title,
+      publish_date: game.publish_date,
+      multiplayer: game.multiplayer,
+      last_played_at: game.last_played_at,
+      archived: game.archived
     }
 
-    stored_musicalbums = load_data_from_file('data/musicalbums.json')
-    stored_musicalbums << label_data
-    write_data_to_file('data/musicalbums.json', stored_musicalbums)
+    stored_games = load_data_from_file('data/games.json')
+    stored_games << game_data
+    write_data_to_file('data/games.json', stored_games)
   end
 
   def store_label(label)
@@ -138,12 +140,16 @@ class AlbumManager
     File.write(file_path, data.to_json)
   end
 
-  private
-
-  def display_message(message)
-    puts "╔#{'═' * (message.length + 2)}╗"
-    puts "║ #{message.chomp} ║"
-    puts "╚#{'═' * (message.length + 2)}╝"
+  def list_all_games
+    puts
+    puts '-- List of all Games --'
+    @games = load_data_from_file('data/games.json')
+    @games.each do |game|
+      puts "(#{game['id']}) | Genre: #{game['genre']} | Author: #{game['authorlast']} #{game['authorfirst']}" \
+           "| Source: #{game['source']} | Label: #{game['label']}" \
+           "| Publish date: #{game['publish_date']} | Multiplayer: #{game['multiplayer']}" \
+           "| Last played at: #{game['last_played_at']}"
+    end
   end
 
   def verify_date(publish_date)
@@ -152,6 +158,8 @@ class AlbumManager
     puts 'Invalid date format. Please use YYYY-MM-DD.'
     'N/A'
   end
+
+  private
 
   def input_genre
     display_message(' Genre: ')
@@ -183,8 +191,19 @@ class AlbumManager
     gets.chomp
   end
 
-  def input_on_spotify
-    display_message(' On Spotify? (true / false): ')
-    gets.chomp.downcase == 'true'
+  def input_multiplayer
+    display_message(' Multiplayer? (Yes / No): ')
+    gets.chomp
+  end
+
+  def input_last_played_at
+    display_message(' Last played at (YYYY-MM-DD): ')
+    gets.chomp
+  end
+
+  def display_message(message)
+    puts "╔#{'═' * (message.length + 2)}╗"
+    puts "║ #{message.chomp} ║"
+    puts "╚#{'═' * (message.length + 2)}╝"
   end
 end
