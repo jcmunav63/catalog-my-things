@@ -18,15 +18,13 @@ describe BookManager do
       allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
 
       # Mock the creation of Book, Label, Author
-      book_double = double('Book', id: 1, publisher: 'Publisher', publish_date: '2020-01-01', cover_state: 'GOOD',
-                                   genre: nil, author: 'Author', label: double('Label', title: 'Label Title'),
-                                   archived: false)
-      label_double = double('Label', id: 1, title: 'Label Title', color: 'Red', items: [])
-      author_double = double('Author', id: 1, first_name: 'First', last_name: 'Last', items: [])
+      @mock_book = instance_double('Book', id: 1)
+      @mock_label = instance_double('Label', id: 1, title: 'Label Title', color: 'Red')
+      @mock_author = instance_double('Author', id: 1, first_name: 'First', last_name: 'Last')
 
-      allow(Book).to receive(:new).and_return(book_double)
-      allow(Label).to receive(:new).and_return(label_double)
-      allow(Author).to receive(:new).and_return(author_double)
+      allow(Book).to receive(:new).and_return(@mock_book)
+      allow(Label).to receive(:new).and_return(@mock_label)
+      allow(Author).to receive(:new).and_return(@mock_author)
 
       # Stubbing methods that interact with files
       allow(@book_manager).to receive(:store_book)
@@ -37,12 +35,14 @@ describe BookManager do
       allow(@book_manager).to receive(:generate_author_id).and_return(1)
     end
 
-    it 'adds a book to the books array' do
-      expect { @book_manager.add_a_book }.to change { @book_manager.books.length }.by(1)
+    it 'adds the correct book to the books array' do
+      @book_manager.add_a_book
+      expect(@book_manager.books).to include(@mock_book)
     end
 
-    it 'adds a label to the labels array' do
-      expect { @book_manager.add_a_book }.to change { @book_manager.labels.length }.by(1)
+    it 'adds the correct label to the labels array' do
+      @book_manager.add_a_book
+      expect(@book_manager.labels).to include(@mock_label)
     end
   end
 
