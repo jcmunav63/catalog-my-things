@@ -25,3 +25,20 @@ CREATE TABLE books (
   publisher VARCHAR(50),
   cover_state VARCHAR(50)
 );
+
+
+CREATE TABLE genre (
+  id INTEGER PRIMARY KEY,
+  name VARCHAR(50)
+);
+
+CREATE TABLE musicalbum (
+  id INT PRIMARY KEY REFERENCES items(id),
+  on_spotify BOOLEAN
+);
+
+CREATE TABLE game (
+  id INT PRIMARY KEY REFERENCES items(id),
+  multiplayer VARCHAR(50),
+  last_played_at DATE
+);

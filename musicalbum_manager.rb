@@ -62,7 +62,7 @@ class AlbumManager
     puts '-- List of all Music Albums --'
     @musicalbums.each do |album|
       label_info = album.label.nil? ? 'N/A' : "#{album.label.title} #{album.label.color}"
-      puts "(#{album.id}) | Genre: #{album.genre.name} | Author: #{album.author}" \
+      puts "(#{album.id}) | Genre: #{album.genre.name} | Author: #{album.author.last_name} #{album.author.first_name}" \
            "| Source: #{album.source} | Label: #{label_info}" \
            "| Publish date: #{album.publish_date.year || 'N/A'} | On Spotify: #{album.on_spotify}"
     end

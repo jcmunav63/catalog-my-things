@@ -165,9 +165,16 @@ class BookManager
     gets.chomp
   end
 
-  def display_message(message)
-    puts "╔#{'═' * (message.length + 2)}╗"
-    puts "║ #{message.chomp} ║"
-    puts "╚#{'═' * (message.length + 2)}╝"
+  # def display_message(message)
+  #   puts "╔#{'═' * (message.length + 2)}╗"
+  #   puts "║ #{message.chomp} ║"
+  #   puts "╚#{'═' * (message.length + 2)}╝"
+  # end
+  def display_message(message, wrap_at = 80)
+    lines = message.scan(/\S.{0,#{wrap_at - 2}}\S(?=\s|$)|\S+/)
+    border_line = '═' * (wrap_at + 2)
+    puts "╔#{border_line}╗"
+    lines.each { |line| puts "║ #{line.ljust(wrap_at)} ║" }
+    puts "╚#{border_line}╝"
   end
 end
