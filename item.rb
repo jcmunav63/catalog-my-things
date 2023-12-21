@@ -1,5 +1,6 @@
 require_relative 'label'
 require_relative 'author'
+require_relative 'genre'
 
 class Item
   attr_accessor :genre, :author, :source, :label, :archived
@@ -15,6 +16,7 @@ class Item
     @archived = false
     label&.add_item(self)
     author&.add_item(self)
+    genre&.add_item(self)
   end
 
   def can_be_archived?()
