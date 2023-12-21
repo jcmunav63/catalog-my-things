@@ -193,7 +193,7 @@ class GamesManager
 
   def input_multiplayer
     display_message(' Multiplayer? (Yes / No): ')
-    gets.chomp
+    gets.chomp.downcase
   end
 
   def input_last_played_at
