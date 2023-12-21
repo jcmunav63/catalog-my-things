@@ -1,10 +1,17 @@
 require_relative '../item'
+require_relative '../author'
+require_relative '../genre'
+require_relative '../label'
 require_relative '../book'
 
 describe Book do
   before(:each) do
-    @book = Book.new(id: 1, genre: 'Fiction', author: 'J.K. Rowling', source: 'Library',
-                     label: nil, publish_date: '2000-07-08', publisher: 'Bloomsbury', cover_state: 'Good')
+    author = Author.new(1, 'J.K. Rowling', 'Jay')
+    genre = Genre.new(1, 'Fiction')
+    label = Label.new(1, 'Bestseller', 'Red')
+
+    @book = Book.new(id: 1, genre: genre, author: author, source: 'Library',
+                     label: label, publish_date: '2000-07-08', publisher: 'Bloomsbury', cover_state: 'bad')
   end
 
   context '#can_be_archived?' do
