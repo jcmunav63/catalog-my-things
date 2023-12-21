@@ -36,7 +36,7 @@ class Catalog
   end
 
   def list_all_authors
-    @authors_manager.list_all_authors
+    @attributes_lists.list_all_authors
   end
 
   def list_all_sources

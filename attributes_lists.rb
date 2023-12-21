@@ -30,6 +30,15 @@ class AttributesLists
     end
   end
 
+  def list_all_authors
+    puts
+    puts '-- List of all authors --'
+    @loaded_authors = load_data_from_file('data/authors.json')
+    @loaded_authors.each do |author|
+      display_message("Author -> First name: #{author['first_name']}, Last name: #{author['last_name']}")
+    end
+  end
+
   def display_message(message)
     puts "╔#{'═' * (message.length + 2)}╗"
     puts "║ #{message.chomp} ║"
