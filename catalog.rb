@@ -26,7 +26,7 @@ class Catalog
   end
 
   def list_all_genres
-    @genres.list_all_genres
+    @attributes_lists.list_all_genres
   end
 
   def list_all_labels
