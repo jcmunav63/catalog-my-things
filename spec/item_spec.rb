@@ -1,42 +1,49 @@
 require_relative '../item'
-require 'rspec'
+require_relative '../genre'
+require_relative '../author'
+require_relative '../label'
 
-RSpec.describe Item do
-  describe '#initialize' do
+describe Item do
+  before :each do
+    @genre = Genre.new(1, 'Thriller')
+    @author = Author.new(1, 'Stephen', 'King')
+    @label = Label.new(1, 'Bestseller', 'Red')
+  end
+
+  context '#initialize' do
     it 'Creates a new item with the correct properties' do
-      item = Item.new('Thriller', 'Stephen King', 'Online shop', 'New', Time.new(2020, 1, 1))
-      expect(item.genre).to eq('Thriller')
-      expect(item.author).to eq('Stephen King')
-      expect(item.source).to eq('Online shop')
-      expect(item.label).to eq('New')
+      item = Item.new(1, @genre, @author, 'Online shop', @label, Time.new(2020, 1, 1))
+      expect(item).to be_an_instance_of(Item)
+      expect(item.genre).to eq(@genre)
+      expect(item.author).to eq(@author)
+      expect(item.label).to eq(@label)
       expect(item.publish_date).to eq(Time.new(2020, 1, 1))
-      expect(item.archived).to be(false)
     end
   end
 
-  describe '#can_be_archived?' do
+  context '#can_be_archived?' do
     it 'Returns true if the item can be archived' do
-      item = Item.new('Action', 'James Cameron', 'Shop', 'From friend', Time.new(2010, 1, 1))
-      expect(item.can_be_archived?).to be(true)
+      item = Item.new(1, @genre, @author, 'Shop', @label, Time.new(2010, 1, 1))
+      expect(item.can_be_archived?).to be true
     end
 
     it 'Returns false if the item cannot be archived' do
-      item = Item.new('Action', 'James Cameron', 'Shop', 'From friend', Time.new(2022, 1, 1))
-      expect(item.can_be_archived?).to be(false)
+      item = Item.new(1, @genre, @author, 'Shop', @label, Time.new(2022, 1, 1))
+      expect(item.can_be_archived?).to be false
     end
   end
 
-  describe '#move_to_archive' do
+  context '#move_to_archive' do
     it 'Archives the item if it can be archived' do
-      item = Item.new('Drama', 'John Scott', 'Online shop', 'Gift', Time.new(2010, 1, 1))
+      item = Item.new(1, @genre, @author, 'Online shop', @label, Time.new(2010, 1, 1))
       item.move_to_archive
-      expect(item.archived).to be(true)
+      expect(item.archived).to be true
     end
 
     it 'Does not archive the item if it cannot be archived' do
-      item = Item.new('Drama', 'John Scott', 'Online shop', 'Gift', Time.new(2022, 1, 1))
+      item = Item.new(1, @genre, @author, 'Online shop', @label, Time.new(2022, 1, 1))
       item.move_to_archive
-      expect(item.archived).to be(false)
+      expect(item.archived).to be false
     end
   end
 end

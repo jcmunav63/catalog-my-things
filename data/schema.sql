@@ -4,6 +4,12 @@ CREATE TABLE labels (
   color VARCHAR(50)
 );
 
+CREATE TABLE Author(
+  id INTEGER PRIMARY KEY,
+  first_name VARCHAR(50) NOT NULL,
+  last_name VARCHAR(50) NOT NULL
+)
+
 CREATE TABLE items (
   id INTEGER PRIMARY KEY,
   genre_id INT REFERENCES genres(id),
