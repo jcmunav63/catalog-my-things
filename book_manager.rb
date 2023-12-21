@@ -1,17 +1,19 @@
 require_relative 'book'
 require_relative 'label'
 require_relative 'author'
+require_relative 'genre'
 require 'json'
 require 'date'
 require 'fileutils'
 
 class BookManager
-  attr_accessor :books, :labels, :authors
+  attr_accessor :books, :labels, :authors, :genres
 
   def initialize
     @books = []
     @labels = []
     @authors = []
+    @genres = []
   end
 
   def add_a_book
@@ -23,19 +25,24 @@ class BookManager
     cover_condition = input_cover_condition
     label_id = generate_label_id
     author_id = generate_author_id
+    genre_name = input_genre_name
+    genre_id = input_genre_id
+    genre = Genre.new(genre_id, genre_name)
     label = Label.new(label_id, label_title, color)
     book_id = generate_book_id
     author = Author.new(author_id, author_first_name, author_last_name)
     book = Book.new(id: book_id, publish_date: publish_date, author: author, label: label, publisher: publisher,
-                    cover_state: cover_condition, genre: nil, source: nil)
+                    cover_state: cover_condition, genre: genre, source: nil)
 
     @books.push(book)
     @labels.push(label)
     @authors.push(author)
+    @genres.push(genre)
     display_message('Book added successfully.')
     store_book(book)
     store_label(label)
     store_author(author)
+    store_genre(genre)
   end
 
   def generate_book_id
@@ -53,6 +60,11 @@ class BookManager
     stored_authors.size
   end
 
+  def input_genre_id
+    stored_genres = load_data_from_file('data/genres.json')
+    stored_genres.size
+  end
+
   def input_cover_condition
     loop do
       display_message('Enter the book cover condition (GOOD or BAD): ')
@@ -63,14 +75,25 @@ class BookManager
     end
   end
 
+  def store_genre(genre)
+    genre_data = {
+      id: genre.id,
+      title: genre.name,
+      item_ids: genre.items.map(&:id)
+    }
+
+    stored_genres = load_data_from_file('data/genres.json')
+    stored_genres << genre_data
+    write_data_to_file('data/genres.json', stored_genres)
+  end
+
   def store_book(book)
     book_data = {
       id: book.id,
       publisher: book.publisher,
       publish_date: book.publish_date,
       cover_condition: book.cover_state,
-      genre: book.genre,
-      source: book.source,
+      genre: book.genre.name,
       label: book.label.title,
       archived: book.archived
     }
@@ -152,6 +175,11 @@ class BookManager
     gets.chomp
   end
 
+  def input_genre_name
+    display_message('Enter the genre name: ')
+    gets.chomp
+  end
+
   def input_author_name
     display_message('Enter the book author\'s first name: ')
     first_name = gets.chomp
@@ -165,14 +193,10 @@ class BookManager
     gets.chomp
   end
 
-  # def display_message(message)
-  #   puts "╔#{'═' * (message.length + 2)}╗"
-  #   puts "║ #{message.chomp} ║"
-  #   puts "╚#{'═' * (message.length + 2)}╝"
-  # end
   def display_message(message, wrap_at = 80)
     lines = message.scan(/\S.{0,#{wrap_at - 2}}\S(?=\s|$)|\S+/)
     border_line = '═' * (wrap_at + 2)
+
     puts "╔#{border_line}╗"
     lines.each { |line| puts "║ #{line.ljust(wrap_at)} ║" }
     puts "╚#{border_line}╝"
