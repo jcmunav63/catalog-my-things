@@ -20,7 +20,7 @@ class Catalog
   end
 
   def list_all_movies
-    @movies_manager.list_all_movies
+    puts 'This option will be available in the future.'
   end
 
   def list_all_games
@@ -40,7 +40,7 @@ class Catalog
   end
 
   def list_all_sources
-    @sources_manager.list_all_sources
+    puts 'This option will be available in the future.'
   end
 
   def add_a_book
@@ -52,7 +52,7 @@ class Catalog
   end
 
   def add_a_movie
-    @movies_manager.add_a_movie
+    puts 'This option will be available in the future.'
   end
 
   def add_a_game
