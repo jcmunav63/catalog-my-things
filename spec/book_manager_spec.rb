@@ -16,7 +16,7 @@ describe BookManager do
         allow(@book_manager).to receive(:input_author_name).and_return(%w[Author Lastname])
         allow(@book_manager).to receive(:input_label_title).and_return('Label Title')
         allow(@book_manager).to receive(:input_cover_condition).and_return('GOOD')
-
+        allow(@book_manager).to receive(:input_genre_name).and_return('Genre Name')
         allow(@book_manager).to receive(:generate_book_id).and_return(1)
         allow(@book_manager).to receive(:generate_label_id).and_return(1)
         allow(@book_manager).to receive(:generate_author_id).and_return(1)
@@ -24,13 +24,10 @@ describe BookManager do
         allow(@book_manager).to receive(:store_label)
         allow(@book_manager).to receive(:store_author)
       end
-
       it 'creates and stores a book with the correct properties' do
         @book_manager.add_a_book
-
         expect(@book_manager.books.last).to have_attributes(
-          id: 1,
-          publisher: 'Publisher',
+          id: 1, publisher: 'Publisher',
           publish_date: '2020-01-01',
           cover_state: 'GOOD',
           author: an_instance_of(Author),
@@ -38,7 +35,6 @@ describe BookManager do
         )
         expect(@book_manager.labels.last).to have_attributes(id: 1, title: 'Label Title', color: 'Red')
         expect(@book_manager.authors.last).to have_attributes(id: 1, first_name: 'Author', last_name: 'Lastname')
-
         expect(@book_manager).to have_received(:store_book).with(@book_manager.books.last)
         expect(@book_manager).to have_received(:store_label).with(@book_manager.labels.last)
         expect(@book_manager).to have_received(:store_author).with(@book_manager.authors.last)
