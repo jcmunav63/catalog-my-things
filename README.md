@@ -13,6 +13,7 @@
   - [🛠 Built With ](#-built-with-)
     - [Tech Stack ](#tech-stack-)
     - [Key Features ](#key-features-)
+  - [🚀 Presentation ](#-presentation-)
   - [💻 Getting Started ](#-getting-started-)
     - [Prerequisites](#prerequisites)
     - [Setup](#setup)
@@ -51,6 +52,13 @@ The Catalog - My Things is an app developed to create a catalog of personal thin
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
+ <!-- LIVE DEMO -->
+
+## 🚀 Presentation <a name="presentation"></a>
+
+- Click [here](https://youtu.be/9LO_0zhpoC4).
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## 💻 Getting Started <a name="getting-started"></a>
 
@@ -121,7 +129,7 @@ Not available at the moment.
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **We will add a user interface.**
+- **We will add the options to add movie and source.**
 - **We will add methods to erase items.**
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
