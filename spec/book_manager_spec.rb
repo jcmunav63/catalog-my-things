@@ -62,10 +62,14 @@ describe BookManager do
   end
   describe '#store_book' do
     it 'stores book data to a file' do
-      book = instance_double('Book', id: 1, publisher: 'Publisher', publish_date: '2020-01-01', cover_state: 'Good',
-                                     genre: nil, author: 'Author',
-                                     source: nil,
+      # Create a mock genre object
+      mock_genre = instance_double('Genre', name: 'Fiction')
+
+      # Use the mock genre in the book instance
+      book = instance_double('Book', id: 1, publisher: 'Publisher', publish_date: '2020-01-01',
+                                     cover_state: 'Good', genre: mock_genre, author: 'Author',
                                      label: instance_double('Label', title: 'Label Title'), archived: false)
+
       allow(@book_manager).to receive(:write_data_to_file)
 
       @book_manager.store_book(book)
