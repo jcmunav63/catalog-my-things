@@ -97,11 +97,15 @@ To run the project, navigate to the project directory and execute the following 
 
 To run tests, run the following command:
 
-Run the following command
+Run the following command to run linter
 ```sh
 rubocop
 ```
 
+Run the following command to run unit tests with RSpec
+```sh
+rspec
+```
 ### Deployment
 
 You can deploy this project using:
